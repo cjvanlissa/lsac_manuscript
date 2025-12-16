@@ -1,46 +1,215 @@
 ---
-title: "Untitled"
-output: github_document
-date: '`r format(Sys.time(), "%d %B, %Y")`'
-bibliography: references.bib
-knit: worcs::cite_all
+title: "Using machine learning to identify moderators of parenting effects on adolescent emotion regulation development"
+bibliography      : ["lsac_forest.bib"]
+output            : 
+  bookdown::html_document2:
+    toc: true
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
+results_folder <- "../lsac_emotional_development"
+mask = TRUE
+# this does nothing for apa_table:
+options(knitr.kable.NA = '')
+knitr::opts_chunk$set(
+  echo = FALSE
+)
+papaja::r_refs("lsac_forest.bib")
 library("worcs")
-# We recommend that you prepare your raw data for analysis in 'prepare_data.R',
-# and end that file with either open_data(yourdata), or closed_data(yourdata).
-# Then, uncomment the line below to load the original or synthetic data
-# (whichever is available), to allow anyone to reproduce your code:
-# load_data()
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
+# Load descriptives
+usethis::with_project(results_folder, {
+  desc <- read.csv("codebook_df_anal.csv")
+  desc <- desc[!grepl("_\\d_[mfc]$", desc$name), ]
+desc <- desc[!grepl("^id(\\.\\d)?$", desc$name), ]
+max_n <- max(desc$n)
+desc_it <- read.csv("descriptives_items.csv")
+sel_vars <- read.csv("selected_variables.csv")
+
+# Find correct sample size for items
+renames <- sel_vars$Variable.Name
+names(renames) <- sel_vars$rename
+desc_it_n <- desc_it$n
+names(desc_it_n) <- desc_it$name
+desc_it_n <- desc_it_n[which(names(desc_it_n) %in% renames[desc$name])]
+names(desc_it_n) <- names(renames)[match(names(desc_it_n), renames)]
+desc$n[match(names(desc_it_n), desc$name)] <- desc_it_n
+
+desc$n[which(desc$name %in% sel_vars$rename)] <- desc_it$n[match(sel_vars$Variable.Name[na.omit(match(desc$name, sel_vars$rename))], desc_it$name)]
+
+# Correct sample size for others
+desc$n[!desc$name %in% sel_vars$rename] <- paste0("<= ", max_n)
+
+tab_invar <- read.csv("measurement_invariance.csv")
+names(tab_invar) <- c("Chi sq.", "df", "CFI", "TLI", "RMSEA", "srmr", "Variable", "items", 
+"min. rel.", "max. rel.")
+tab_invar$Model <- c("configural", "metric")
+tab_invar <- tab_invar[, c("Variable", "Model", "items", "Chi sq.", "df", "CFI", "TLI", "RMSEA", "min. rel.", "max. rel.")]
+})
+
+knitr::kable(tab_invar, digits = 2, caption = "Measurement invariance model fit statistics for predictors and outcome.")
 ```
 
-This manuscript uses the Workflow for Open Reproducible Code in Science [@vanlissaWORCSWorkflowOpen2021] to ensure reproducibility and transparency. All code <!--and data--> are available at <lsac_manuscript>.
+# Method
 
-This is an example of a non-essential citation [@@vanlissaWORCSWorkflowOpen2021]. If you change the rendering function to `worcs::cite_essential`, it will be removed.
+The Workflow for Open Reproducible Code in Science (WORCS) was used to create a reproducible research archive [@vanlissaWORCSWorkflowOpen2020].
+All analysis code, supplemental materials and synthetic data are available at <https://github.com/cjvanlissa/lsac_emotional_development>.
+The original data and all study documentation are available under controlled access via <https://aifs.gov.au/growing-up-in-australia>.
 
-<!--The function below inserts a notification if the manuscript is knit using synthetic data. Make sure to insert it after load_data().-->
-`r notify_synthetic()`
+## Participants and procedure
 
-## GitHub Documents
+Participants were `r desc$n[which(desc$name == "Age")]` children and their `r desc$n[which(desc$name == "age_m")]` mothers and `r desc$n[which(desc$name == "age_f")]` fathers enrolled in the Longitudinal Study of Australian Children [LSAC, @australianinstituteoffamilystudiesGrowingAustralia2020].  repeated measures of parenting practices and child internalizing symptoms, separately reported for mothers and fathers. The analytic dataset excluded any identifier variables and recoded categorical variables for analysis consistency (e.g., recoding upper categories in extracurricular activities and child support to preserve ordinal structure).
 
-This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
 
-## Including Code
+## Measures
 
-You can include R code in the document as follows:
+The primary predictors (hereafter: predictors) were parenting scales documented in @zubrickParentingMeasuresLongitudinal2014.
+Both parents used five-point Likert scales (1 Never, 5: Always) to report their specific parenting practices, namely warmth (*Express affection by hugging, kissing and holding this child*), anger (*Of all the times you talk to this child about his/her behaviour, how often is this disapproval*), and inductive reasoning (*Explain to this child why he/she was being corrected*).^[Consistency and monitoring were considered as predictors, but omitted from this report due to poor fit.]
 
-```{r cars}
-summary(cars)
+The primary outcome variable (hereafter: outcome) was Child Internalizing Symptoms, assessed on a three-point Likert scale (1: Not true, 3: Certainly true) using the child-reported emotional problems subscale of the Strengths and Difficulties Questionnaire [SDQ, @goodmanPsychometricPropertiesStrengths2001], for example: *I am often unhappy, depressed or tearful*.
+
+The predictors and outcomes were assessed biannually for four waves (except warmth, which was assessed for three waves).
+We conducted confirmatory factor analyses (CFA), imposing configural- and metric invariance across waves and (for predictors) across parents, see Table \@ref(tab:tabinvar).
+We considered RMSEA < .06, CFI > .95 and TLI > .95 to indicate good model fit [@huCutoffCriteriaFit1999].
+We further computed composite reliability for each scale across respondents and timepoints [@greenReliabilitySummedItem2009].
+For most scales, the fit of the metric invariance model was good, and reliability (assuming metric invariance) was acceptable, except for anger.
+
+```{r tabinvar}
+usethis::with_project(results_folder, {
+  tab_invar <- read.csv("measurement_invariance.csv", stringsAsFactors = FALSE)
+})
+
+tab_invar <- tab_invar[, c("model", "items", "chisq", "df", "rmsea", "cfi", "tli", 
+"min_rel_lv", "max_rel_lv")]
+tab_invar <- tab_invar[!tab_invar$model %in% c("con", "mon"), ]
+tab_invar$model <- factor(tab_invar$model, levels = c("emo", "war", "con", "ang", "mon", "ind"), labels = c("SDQ Int.", "Warmth", "Consistency", "Anger", "Monitoring", "Ind. Reas."))
+tab_invar$model <- paste0(tab_invar$model, c(" C", " M"))
+names(tab_invar) <- c("Model", "Items", "$\\chi^2$", "df", "RMSEA", "CFI", "TLI", "rel$_{min}$", "rel$_{max}$")
+knitr::kable(tab_invar, digits = 2, caption = "CFAs for outcome (SDQ Int.) and predictors. C: Configural, M: metric invariance.")
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
+### Moderator Variables
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+
+```{r}
+usethis::with_project(results_folder, {
+scls <- read.csv("descriptives_scales.csv", stringsAsFactors = FALSE)
+  interp <- read.csv("variable_interpretation.csv", stringsAsFactors = FALSE)
+interp$name <- tolower(gsub(" .*$", "", interp$Variable))
+desc <- merge(desc, interp, by = "name", all.x = TRUE)
+desc$Person[is.na(desc$Person)] <- "NA"
+desc$Resp <- factor(desc$Person, levels = c("NA", "Mother", "Father", "Father/Mother", "Not Applicable",  "Study Child", "Teacher/Carer", "Home"), labels = c("O", "M", "F", "M/F", "O", 
+"C", "T/C", "NA"))
+desc$unique <- desc$unique-1L
+desc_cat <- desc
+desc_cat$mode_prop <- desc_cat$mode/max_n
+desc_cat$mode <- desc_cat$mode_value
+desc_cat <- desc_cat[!desc$type == "numeric", c("name", "n", "unique", "mode", "mode_prop", "v", "Resp", "Question", "Values")
+]
+
+})
+
+desc_num <- desc[desc$type == "numeric" & !desc$name %in% scls$model, c("name", "n", "unique", "mean", "sd", "min", "max", "skew", "kurt", "Resp")]
+desc_scl <- desc[desc$name %in% scls$model, c("name", "n", "unique", "mean", "sd", "min", "max", "skew", "kurt", "Resp")]
+names(scls)[2] <- "name"
+desc_scl <- merge(desc_scl, scls, by = "name", all.x = TRUE)
+desc_scl <- desc_scl[, c("name", "unique", "mean", "sd", "min", "max", "skew", 
+"kurt", "Resp", "items", "cfi", "tli", "rmsea", "rel_lv")]
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+We included `r nrow(desc)` moderators (hereafter: moderators), ranging from demographic variables to environmental factors.
+Single-indicator variables were included in the analysis without further preprocessing;
+latent variable scores were used for multi-item scales (see [Supplementary Table S1](https://github.com/cjvanlissa/lsac_emotional_development/blob/a38bb8061a61e944f3f6c8e8532c9087084888ba/descriptives_scales.csv) for model fit and reliability).
+Table \@ref(tab:tabcat) shows descriptive statistics for categorical variables, \@ref(tab:tabnum) for continuous variables,
+and \@ref(tab:tabscal) for multi-item scales.
+
+```{r tabcat}
+knitr::kable(desc_cat[ , c("name", "n", "unique", "mode", "mode_prop", "v", "Resp")], caption = "Categorical moderator descriptive statistics. Unique: unique values, including missing. Mode: most common value. Mode_prop: proportion of cases with the mode value. V: categorical variable dispersion (similar to standard deviation for continuous variables). Resp: Respondent, M = mother, F = father, M/F = both, C = Child, O = other.",  digits = 2)
+```
+
+```{r tabnum}
+knitr::kable(desc_num, caption = "Numeric moderator descriptive statistics. Resp: Respondent, M = mother, F = father, C = Child, O = other, T/C = teacher/carer.",  digits = 2)
+```
+
+```{r tabscal}
+knitr::kable(desc_scl, caption = "Scale descriptive statistics. Resp: Respondent, M = mother, F = father, C = Child, O = other.",  digits = 2)
+```
+
+## Strategy of analyses
+
+We set out to identify the most important moderators of the effects of parenting practices on children's internalizing symptoms (or: moderators of parenting effects).
+All analyses were conducted in `r papaja::cite_r()`.
+Missing data were imputed using 2-nearest neighbors [@kowarikImputationPackageVIM2016].
+We used Random Intercept Cross-Lagged Panel Models to estimate the parenting effects [RI-CLPM, @hamakerCritiqueCrosslaggedPanel2015].
+RI-CLPMs are a longitudinal model that partition the repeated measurements of predictor- and outcome variables into two components: stable between-family differences in parenting and internalizing symptoms (random intercepts) and within-family deviations from this stable state.
+We estimated separate RI-CLPMs for each parenting practice and parent.
+All other parenting practices were included in the moderator set, to allow for interactions between parenting practices.
+In an RI-CLPM, parenting effects can be interpreted as follows: If parents exibit higher levels of this parenting behavior than usual in one wave, does this predict a change in their children's internalizing symptoms in the next wave?
+
+We used the machine learning method SEM-forests to identify potential moderators of parenting effects [@brandmaierTheoryguidedExplorationStructural2016].
+A SEM-forest is comprised of several (in our case, 30) SEM-trees.
+A SEM-tree is constructed by starting with the full sample, and identifying the moderator variable and its value which - when splitting the sample in two based on that variable and value - result in two post-split groups with the maximum possible difference in the value of a focal parameter as determined by a score-based test [@arnoldScoreGuidedStructuralEquation2021].
+In our case, the focal parameter was the parenting effect's regression coefficient.
+To illustrate: a SEM-tree might determine that splitting the sample into families who score above versus below a score of 1.72 on paternal anger results in two groups with maximally different values for the parenting effect's regression coefficient.
+This splitting procedure is iteratively repeated for each of the post-split groups, and continues until a post-split group reaches a given minimum sample size (in our case: 200 cases).
+Single trees are readily interpretable as a flowchart of binary branching decisions.
+This interpretability comes at a cost of a loss of predictive performance; a single tree does not comprehensively explore all different ways in which differences in parenting effect might arise, or consider all moderators. 
+It selects the best moderator to perform a split.
+If several moderators are approximately equally good, or interchangeable, it only picks one.
+Thus, a single tree illustrates one possible way in which differences in parenting effects might arise.
+
+SEM forests capture greater nuance in the relationships between moderators and parenting effects by combining several trees that each explore the data in different ways.
+This is achieved by bootstrapping the sample for each tree in the forest,
+and by randomly selecting (in our case, 12) moderators to choose from at each split in the tree.
+The analyses took approximately two weeks to complete on an Intel Xeon Gold 6130 2.10Ghz system and 32Gb of RAM.
+The number of trees in the forest was set to 30 to allow for efficient paralellization across the system's 32 cores.
+
+The primary outcome of interest was the relative importance of each moderator.
+Importance is computed for each tree in the forest, by taking cases not included in that tree's bootstrap sample and using their values on the moderator values to traverse the tree until they reach a terminal node,
+then computing the model fit (-2 log-likelihood) for those cases given the model in that terminal node.
+Then, each moderator is permuted in turn, thus losing any meaningful information it contained,
+and then the tree is traversed again using those now-meaningless moderator values.
+Variable importance is defined as the decrease in model fit that occurs after permuting a moderator.
+If a moderator was important, then the model fit should become worse when it is shuffled.
+
+The second outcome of interest was the marginal association of moderators with the parenting effect,
+which is visualized by sampling a grid of values along the moderator (in our case, 20),
+and drawing a random sample (in our case, n = 1000) for all other moderators to average out their effect.
+Then, the expected value of the parenting effect is calculated for those combinations of values, and plotted.
+
+The third outcome of interest is a single tree for each parenting practice.
+This single tree tells a data story of the kinds of between-family differences that make a difference for the effect of parenting practices on emotional development - but importantly, this should be seen as just one possible way in which between-family differences in parenting effects might arise, not as the only possible way.
+
+We focused on the interpretation of the top 10 most important moderators for each model.
+While this cutoff is arbitrary, it is defensible to focus more on top predictors because variable importance declines exponentially; thus, moderators not included in the top 10 are much less important than those included in the top 10.
+The single trees were also grown on the top 10 most important moderators.
+
+## Results
+
+### Variable Importance
+
+Figure \@ref(fig:figvim) below show the permutation importance for each parenting behavior, for mothers and fathers separately.
+
+```{r figvim, fig.cap="Importance of the top 10 moderators for each parenting behavior. Point shape indicates the approximate shape of the relationship of each moderator with the parenting effect."}
+knitr::include_graphics(file.path(results_folder, "vim_plot_paper.svg"))
+```
+
+#### Warmth
+
+It is notable that many of the most important moderators of the effects of warmth were the same across mothers and fathers.
+Specifically, father involvement (e.g., "In the past month how often did you eat an evening meal with this child") was the most important moderator of both, and stood out above all other moderators for paternal warmth.
+
+```{r, figures-side, fig.show="hold", out.width="50%"}
+par(mar = c(4, 4, .1, .1))
+knitr::include_graphics(file.path(results_folder, "pdp_war_m_involvement_f.svg"))
+knitr::include_graphics(file.path(results_folder, "pdp_war_f_involvement_f.svg"))
+```
+
+Mothers' and fathers' difficult life ("How difficult do you feel your life is at present?", from	"No problems or stress" to "Very many problems and stresses") ranked high for both, as did the related moderator, mothers' coping.
+In the past month how often did you...Eat an evening meal with this child	1 Once a day or more; 2 A few times a week; 3 A few times a month; 4 Rarely; 5 Not at all
+
+Family climate How often do people in your family yell at each other?	1 Never; 2 Hardly ever; 3 Sometimes; 4 Often; 5 Always
+Enjoy (physical) activity
+School concerns (i.e., the child behaved poorly)
