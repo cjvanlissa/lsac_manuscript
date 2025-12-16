@@ -200,8 +200,8 @@ knitr::include_graphics(file.path(results_folder, "vim_plot_paper.svg"))
 
 #### Warmth
 
-Many of the most important moderators for warmth were the same across mothers and fathers.
-The most important moderator of both was father involvement (e.g., "In the past month how often did you eat an evening meal with this child"), which stood out above all other moderators for paternal warmth.
+Note that many of the most important moderators for warmth were the same across mothers and fathers.
+For both, the most important moderator was father involvement (e.g., "In the past month how often did you eat an evening meal with this child"), which stood out above all other moderators for paternal warmth.
 
 ```{r, figures-side, fig.show="hold", out.width="50%", eval = FALSE}
 par(mar = c(4, 4, .1, .1))
@@ -221,3 +221,7 @@ For maternal warmth, several micro-system characteristics were important, includ
 For paternal warmth, the child's persistent medical conditions (*sick*) ranked high,
 as did two micro-level family characteristics: whether the child was of *indigenous* descent,
 and whether they *had a parent living elsewhere*, which strongly related to the biological relationship to the parents ($r = .80$), and both might be indicators of being part of an intact biological family.
+
+#### Anger
+
+While there was less consistency in the moderators of parental anger, it is noticable that, across both parents, factors related to fathers were more important than those related to mothers.
