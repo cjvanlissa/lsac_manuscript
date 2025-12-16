@@ -175,9 +175,10 @@ Variable importance is defined as the decrease in model fit that occurs after pe
 If a moderator was important, then the model fit should become worse when it is shuffled.
 
 The second outcome of interest was the marginal association of moderators with the parenting effect,
-which is visualized by sampling a grid of values along the moderator (in our case, 20),
-and drawing a random sample (in our case, n = 1000) for all other moderators to average out their effect.
+which is obtained by sampling a grid of values along the moderator (in our case, 20),
+and drawing a random sample (in our case, n = 1000) of participants to determine the values of all other moderators, to average out their effect.
 Then, the expected value of the parenting effect is calculated for those combinations of values, and plotted.
+Since our analysis yields 774 such plots, they are not reprinted here, but they are available in the [online repository](https://cjvanlissa.github.io/lsac_emotional_development/#shape-of-association).
 
 The third outcome of interest is a single tree for each parenting practice.
 This single tree tells a data story of the kinds of between-family differences that make a difference for the effect of parenting practices on emotional development - but importantly, this should be seen as just one possible way in which between-family differences in parenting effects might arise, not as the only possible way.
@@ -191,6 +192,7 @@ The single trees were also grown on the top 10 most important moderators.
 ### Variable Importance
 
 Figure \@ref(fig:figvim) below show the permutation importance for each parenting behavior, for mothers and fathers separately.
+<!-- In the written description, we refer to specific variables by parent and number, e.g. the number one moderator of maternal warmth, father involvement, is M1.  -->
 
 ```{r figvim, fig.cap="Importance of the top 10 moderators for each parenting behavior. Point shape indicates the approximate shape of the relationship of each moderator with the parenting effect."}
 knitr::include_graphics(file.path(results_folder, "vim_plot_paper.svg"))
@@ -198,18 +200,24 @@ knitr::include_graphics(file.path(results_folder, "vim_plot_paper.svg"))
 
 #### Warmth
 
-It is notable that many of the most important moderators of the effects of warmth were the same across mothers and fathers.
-Specifically, father involvement (e.g., "In the past month how often did you eat an evening meal with this child") was the most important moderator of both, and stood out above all other moderators for paternal warmth.
+Many of the most important moderators for warmth were the same across mothers and fathers.
+The most important moderator of both was father involvement (e.g., "In the past month how often did you eat an evening meal with this child"), which stood out above all other moderators for paternal warmth.
 
-```{r, figures-side, fig.show="hold", out.width="50%"}
+```{r, figures-side, fig.show="hold", out.width="50%", eval = FALSE}
 par(mar = c(4, 4, .1, .1))
 knitr::include_graphics(file.path(results_folder, "pdp_war_m_involvement_f.svg"))
 knitr::include_graphics(file.path(results_folder, "pdp_war_f_involvement_f.svg"))
 ```
 
-Mothers' and fathers' difficult life ("How difficult do you feel your life is at present?", from	"No problems or stress" to "Very many problems and stresses") ranked high for both, as did the related moderator, mothers' coping.
-In the past month how often did you...Eat an evening meal with this child	1 Once a day or more; 2 A few times a week; 3 A few times a month; 4 Rarely; 5 Not at all
+Mothers' and fathers' difficult life also ranked high for both ("How difficult do you feel your life is at present?", from	"No problems or stress" to "Very many problems and stresses"),
+as did the related moderator, mothers' coping.
+Child-reported family climate was also important for both maternal and paternal warmth ("How often do people in your family yell at each other?").
+Finally, two adolescent characteristics ranked high for both:
+children's enjoyment of (physical) activity, which might be an indicator of children's good health,
+and school concerns (i.e., the child behaved poorly).
 
-Family climate How often do people in your family yell at each other?	1 Never; 2 Hardly ever; 3 Sometimes; 4 Often; 5 Always
-Enjoy (physical) activity
-School concerns (i.e., the child behaved poorly)
+For maternal warmth, several micro-system characteristics were important, including whether the child had a *say* in what the family does, whether someone in the household *helped them with homework*, and whether the child was *biologically related to the parents*.
+
+For paternal warmth, the child's persistent medical conditions (*sick*) ranked high,
+as did two micro-level family characteristics: whether the child was of *indigenous* descent,
+and whether they *had a parent living elsewhere*, which strongly related to the biological relationship to the parents ($r = .80$), and both might be indicators of being part of an intact biological family.
