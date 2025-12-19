@@ -1,12 +1,58 @@
 ---
-title: "Using machine learning to identify moderators of parenting effects on adolescent emotion regulation development"
+title             : "Using machine learning to identify moderators of parenting effects on adolescent internalizing problems"
+shorttitle        : "Parenting Effects on Internalizing Problems"
+
+author:
+  - name: "Boele, Savannah"
+    affiliation: "1"
+    corresponding: yes
+    address: "?"
+    email: "s.boele@essb.eur.nl"
+  - name: "Mastrotheodoros, Stefanos"
+    affiliation: "2"
+  - name: "Caspar J. Van Lissa"
+    affiliation: "3"
+
+affiliation:
+  - id: "1"
+    institution: "Tilburg University, department of Methodology & Statistics"
+  - id: "2"
+    institution: "Tilburg University, department of Methodology & Statistics"
+  - id: "3"
+    institution: "Tilburg University, department of Methodology & Statistics"
+
+authornote: |
+  This is a preprint paper, generated from Git Commit # `r substring(gert::git_commit_id(), 1, 8)`. This work was funded by a NWO Veni Grant (NWO Grant Number VI.Veni.191G.090), awarded to the lead author.
+
+abstract: |
+  Write me
+  
+keywords          : "emotion regulation, parenting, adolescence, machine learning, theory formation"
+wordcount         : "6199"
+
 bibliography      : ["lsac_forest.bib"]
-output            : 
-  bookdown::html_document2:
-    toc: true
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_docx
+knit              : worcs::cite_all
+urlcolor: blue
+header-includes:
+  - \raggedbottom
+  - \usepackage{svg}
 ---
 
-```{r setup, include = FALSE}
+```{r include = FALSE}
+#https://www.matthewvanaman.com/blog/guide-to-collaborative-writing-r-markdown-google/
+set.seed(42)
 results_folder <- "../lsac_emotional_development"
 mask = TRUE
 # this does nothing for apa_table:
@@ -16,7 +62,8 @@ knitr::opts_chunk$set(
 )
 papaja::r_refs("lsac_forest.bib")
 library("worcs")
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, cache.extra = knitr::rand_seed)
+options(tinytex.engine_args = '--shell-escape')
 
 # Load descriptives
 usethis::with_project(results_folder, {
@@ -226,3 +273,10 @@ and whether they *had a parent living elsewhere*, which strongly related to the 
 #### Anger
 
 While there was less consistency in the moderators of parental anger, it is noticable that, across both parents, factors related to fathers were more important than those related to mothers.
+
+\newpage
+
+# References
+
+::: {#refs custom-style="Bibliography"}
+:::
