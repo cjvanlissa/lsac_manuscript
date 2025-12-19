@@ -42,13 +42,16 @@ draft             : no
 
 documentclass     : "apa6"
 classoption       : "man"
-output            : papaja::apa6_docx
+output            :
+  - papaja::apa6_docx
+  - bookdown::html_document2
 knit              : worcs::cite_all
 urlcolor: blue
 header-includes:
   - \raggedbottom
   - \usepackage{svg}
 ---
+
 
 ```{r include = FALSE}
 #https://www.matthewvanaman.com/blog/guide-to-collaborative-writing-r-markdown-google/
@@ -95,13 +98,46 @@ tab_invar$Model <- c("configural", "metric")
 tab_invar <- tab_invar[, c("Variable", "Model", "items", "Chi sq.", "df", "CFI", "TLI", "RMSEA", "min. rel.", "max. rel.")]
 })
 
-knitr::kable(tab_invar, digits = 2, caption = "Measurement invariance model fit statistics for predictors and outcome.")
 ```
+
+
+# Introduction
+
+Not all children experiencing supportive parenting thrive, and not all children raised with adversity struggle. Yet, adolescents who do develop internalizing problems face heightened risks for long-term difficulties (e.g., Clayborne et al., 2019; Fang et al., 2024). Identifying which adolescents are most at risk is therefore critical. However, many empirical studies have overlooked heterogeneity in parenting effects (Boele et al., 2020; Keijsers et al., 2022), leaving key gaps in our understanding of how parenting shapes internalizing problems beyond ‘the average family’. This empirical gap challenges prevention efforts, as average effects may mask meaningful differences and lead to interventions that miss those most in need. This exploratory study aims to fill this gap by exploring 67 potential moderators of within-family effects of parenting (i.e., warmth, inductive reasoning, and angry parenting) on adolescents' internalizing problems. A biennial timescale allows us to capture macro-developmental processes. We used the SEM-forests algorithm (Brandmaier, Prindle, McArdle, & Lindenberger, 2016) to identify the most important moderators of within-family predictive effects, which were modeled using random-intercept cross-lagged panel models (RI-CLPMs). 
+
+## How Parents’ contribute to their child’s  the Development of Internalizing Problems is expected to be different from family to family
+
+Parents contribute to their adolescents' emotional well-being, including internalizing problems, but how is likely different from family to family. Developmental and parenting theories emphasize that the way a parenting practice is affecting a child’s well-being might depend, among others, on the child’s personality (Belsky & Pluess, 2009) and legitimacy beliefs of their parents’ authority (Darling..), the parents’ overall parenting style (Darling & Steinberg, 1993), and the family’s culture (Soenens, et al., 2015). Idiosyncratic theoretical approaches (Chaku & Beltz, 2022) even propose that adolescents follow their own unique developmental pathways, each uniquely influenced by parenting practices. Accordingly, the principle of multifinality suggests that the same parenting practice may lead to different outcomes across individuals (Cicchetti & Rogosch, 1996). Hence, which parenting practices and how they affect adolescents' development of internalizing problems is a heterogeneous phenomenon. 
+
+Ecological models further emphasize that parenting effects emerge from a complex interplay of individual, relational, and contextual factors. For example, the Bioecological model (Bronfenbrenner & Evans, 2000; Ferguson & Evans, 2019) posits that development is the result of processes between the person and its multi-layered contexts, processes that unfold over time. The contexts people are embedded in are called micro-system, meso-system, exo-system, and macro-system, while the chrono-system captures developmental time (Figure \@ref(fig:figbioecological)). The micro-system includes contexts with which the person has direct contact, e.g., the family, the school; the meso-system reflects intersections among contexts; the exo-system reflects settings that do not contain but impact the developing child; the macro-system reflects the effects of cultures and subcultures (Ferguson & Evans, 2019). Given such influences on child development, we can expect that parenting effects are likely characterized by substantial heterogeneity; what is adaptive in one family, might be maladaptive in another. Yet, empirical research lacks studies tapping into heterogeneity in parenting effects.
+
+```{r figbioecological, fig.cap="The Bioecological Model of Development (adapted from Ferguson & Evans, 2019)."}
+knitr::include_graphics("bioecological_model.png")
+```
+
+
+## Status Quo of Empirical Parenting Research: Focus on Within-Family Effects but Still Overlooking Theorized Heterogeneity
+
+Although developmental theories emphasize that parenting effects are heterogeneous, longitudinal research has mostly examined what happens in the “average family.” Over the past decade, however, an important methodological revolution has taken place. New approaches, such as the random-intercept cross-lagged panel model (RI-CLPM; Hamaker et al., 2015; Keijsers, 2016), separate stable between-family differences from within-family processes. This allows researchers to examine how changes in parenting relate to changes in the development of a particular child. The use of RI-CLPMs has expanded rapidly (see Figure \@ref(fig:figsystematicsearch)) and has reshaped conclusions from earlier work: within families, parenting effects on adolescent internalizing problems often appear smaller or even absent (Boele et al., 2023; Dawson & Samek, 2022; Franssens et al., 2021).
+
+Yet the second step of this revolution has not been taken: systematically examining and explaining heterogeneity in those within-family parenting effects. For example, only four of twelve studies of within-family lagged parenting effects considered moderation (Boele et al., 2017). The same is true in more recent RI-CLPM applications (e.g., Meuleman et al., 2024; Nelemans et al., 2020), despite the availability of guidelines for testing moderation (Mulder & Hamaker, 2020; Speyer et al., 2022). When moderation is examined, it typically focuses on a single variable - often adolescent or parent sex (e.g., Yang et al., 2022; Vrolijk et al., 2020) or or mothers’ and fathers’ relative involvement in childrearing (Van Lissa & Keizer, 2019).
+
+In sum, methodological innovations have shifted the field of parenting research from between-family to within-family research, but the step toward heterogeneity of within-family effects has yet to follow. Hence, the empirical “heterogeneity revolution” in the social sciences (Bryan et al., 2021) has yet to reach parenting research. Crucially, this leaves a central theoretical assumption largely untested: adolescents may not be uniformly affected by the same parenting practice in their development of internalizing problems (Bronfenbrenner & Evans, 2000).
+
+
+
+```{r figsystematicsearch, fig.cap="Number of published peer-reviewed studies using RI-CLPMs to study the within-person prospective link between parenting and adolescents’ internalizing problems.^[info on keywords, systematic search performed on 31st of July 2025]"}
+knitr::include_graphics("systematic_search.png")
+```
+
+## The Present Study
+
+With moderators of parenting effects largely unexplored, a key empirical question remains understudied: What distinguishes families in which, for example, parental warmth is beneficial from those in which it is not? This study addresses that question by examining a broad set of potential moderators in the biennial within-family effects of two need-supporting (warmth, inductive reasoning) and one need-thwarting (angry parenting) practice (Soenens et al., 2019) on adolescent internalizing problems. We cast a wide net across potential risk and protective factors to identify which moderators and apply SEM-forests - a machine learning–based, person-centered technique - to identify the most influential moderators (Brandmaier et al., 2016). This data-driven approach complements theory by clarifying whether parenting effects are idiosyncratic - if many moderators explain small amounts of variation, suggesting family-specific processes - or whether a smaller set of moderators explains most variability, pointing to subgroups of families that follow similar developmental parenting effects. First studies suggest that micro-level parent–adolescent dynamics are highly idiosyncratic (Boele et al., 2024). Whether longer-term parenting effects - shaped by these everyday family-specific dynamics (Bronfenbrenner & Evans, 2000) - are also highly heterogeneous, however, remains largely understudied. By identifying who is most at risk, this study may inform more targeted, group-based, or personalized interventions for adolescent internalizing problems.
 
 # Method
 
 The Workflow for Open Reproducible Code in Science (WORCS) was used to create a reproducible research archive [@vanlissaWORCSWorkflowOpen2020].
-All analysis code, supplemental materials and synthetic data are available at <https://github.com/cjvanlissa/lsac_emotional_development>.
+All analysis code and supplemental materials are available at <https://github.com/cjvanlissa/lsac_emotional_development>.
 The original data and all study documentation are available under controlled access via <https://aifs.gov.au/growing-up-in-australia>.
 
 ## Participants and procedure
@@ -112,7 +148,7 @@ Participants were `r desc$n[which(desc$name == "Age")]` children and their `r de
 ## Measures
 
 The primary predictors (hereafter: predictors) were parenting scales documented in @zubrickParentingMeasuresLongitudinal2014.
-Both parents used five-point Likert scales (1 Never, 5: Always) to report their specific parenting practices, namely warmth (*Express affection by hugging, kissing and holding this child*), anger (*Of all the times you talk to this child about his/her behaviour, how often is this disapproval*), and inductive reasoning (*Explain to this child why he/she was being corrected*).^[Consistency and monitoring were considered as predictors, but omitted from this report due to poor fit.]
+Both parents used five-point Likert scales (from "Never" to "Always") to report on their parenting practices, namely warmth (*Express affection by hugging, kissing and holding this child*), anger (*Of all the times you talk to this child about his/her behaviour, how often is this disapproval*), and inductive reasoning (*Explain to this child why he/she was being corrected*).^[Consistency and monitoring were also considered, but omitted due to unacceptable psychometric properties.]
 
 The primary outcome variable (hereafter: outcome) was Child Internalizing Symptoms, assessed on a three-point Likert scale (1: Not true, 3: Certainly true) using the child-reported emotional problems subscale of the Strengths and Difficulties Questionnaire [SDQ, @goodmanPsychometricPropertiesStrengths2001], for example: *I am often unhappy, depressed or tearful*.
 
@@ -274,9 +310,16 @@ and whether they *had a parent living elsewhere*, which strongly related to the 
 
 While there was less consistency in the moderators of parental anger, it is noticable that, across both parents, factors related to fathers were more important than those related to mothers.
 
+Caspar will finish writing this
+
+## Discussion 
+
+TODO
+
 \newpage
 
 # References
 
 ::: {#refs custom-style="Bibliography"}
 :::
+
