@@ -312,6 +312,11 @@ The single trees were also grown on the top 10 most important moderators.
 
 Figure \@ref(fig:figvim) below show the permutation importance for each parenting behavior, for mothers and fathers separately.
 The approximate shape of the marginal association is summarized by the shape of each point in these plots.
+Importance metrics often show approximately exponential decay.
+This pattern is especially pronounced for fathers' anger,
+where the most important moderator is much more important than those that follow.
+For mothers' inductive reasoning, by contrast, shows a nearly-flat profile,
+which indicates that no moderators are much more important than others.
 The effect of moderators on parenting effects should be interpreted in the context of the distribution of family-specific parenting effects.
 As Figure \@ref(fig:figboxplots) shows, on average, all parenting practices had negative effects,
 although maternal warmth was near-zero on average.
@@ -329,7 +334,6 @@ knitr::include_graphics(file.path(results_folder, "parenting_effects_boxplots.sv
 
 #### Warmth
 
-<!-- INVOLVEMENT IS REVERSE-CODED! -->
 For maternal warmth, the most important moderator (1) was *father involvement* (In the past month how often did you eat an evening meal with this child, from "Once a day or more" to "Not at all").
 Its marginal relationship with the effect of mothers' warmth was flat.
 Other important moderators were mother's (2) and fathers' (3) *life difficulties* (How difficult do you feel your life is at present?, from "No problems or stress" to "Very many problems and stresses").
@@ -353,12 +357,11 @@ Whether the child was of *indigenous* (7) descent ("yes/no") positively moderate
 Whether the study child had a *parent living elsewhere* (9, no/yes) had a positive moderating effect.
 Finally, how much the child *enjoyed physical activity* (10, from "A lot" to "Not at all") had a negative moderating effect.
 
-Many of the most important moderators for warmth were the same across mothers and fathers,
-with an emphasis on micro-system characteristics.
+Many of the most important moderators for warmth were the same across mothers and fathers.
 For both, the most important moderator was (lack of) *father involvement*,
 which stood out above all other moderators for paternal warmth.
 Despite being the most important moderator, its marginal effect was flat.
-A likely explanation is that its effect is expressed in interaction with other moderators.
+A likely explanation is that it interacts with other moderators.
 Parent characteristics, like mothers' and fathers' *difficult life* and the related moderator, *mothers' coping*,
 also ranked high for both.
 The child-reported *family climate* was also important for both.
@@ -366,60 +369,56 @@ Finally, two adolescent characteristics ranked high for both:
 children's *enjoyment of activity*, which might be an indicator of children's good health (notice *sick*, for father's warmth),
 and *school concerns*.
 
-For maternal warmth, several other micro-system characteristics were important, including whether the child had a *say* in what the family does, whether someone in the household *helped them with homework*, and whether the child was *biologically related to the parents*.
-For paternal warmth, two micro-level family characteristics were important:
-whether the child was of *indigenous* descent,
+Most of the abovementioned important moderators are micro-system characteristics.
+This pattern persists when examining unique top moderators of maternal and paternal warmth.
+For maternal warmth, this included whether the child had a *say* in family decisions, whether they received *help with homework*, and whether they were *biologically related to the parents*.
+For paternal warmth, this included
+whether the child was of *indigenous* descent
 and whether they *had a parent living elsewhere*.
 The latter strongly correlates with *biological relationship* (see mother effects), $r = .80$, so both might be indicators of an intact biological family.
 
 #### Anger
 
-While there was less consistency in the moderators of parental anger, it is noticable that, across both parents, factors related to fathers were more important than those related to mothers.
+For mothers' anger, the most important moderator was *father's employment* (1; no/yes),
+which had a positive moderating effect.
+The moderating effect of child's *say* (2) in family affairs also had a positive moderating effect.
+The child's *enjoyment of physical activity* (3), *Concern about the child's weight* (4, from "Not at all" to "Very"), father's *coping* (5),
+*absenteeism* (6, no/yes),
+and mothers' *life difficulties* (7) all had negative moderating effects.
+Fathers' *life difficulties* (8) had a difficult to interpret moderating effect,
+as did the childs' *health* (9, from "Excellent" to "Poor").
+Both were approximately sinusoid.
+Finally, *fathers' involvement* (10) had a positive moderating effect.
 
-Caspar will finish writing this
+For fathers' anger, the most important moderator was again *fathers' involvement* (1), with a positive effect.
+The child's *health* (2) also had a positive moderating effect.
+Child-reported *family climate* (3) had a negative moderating effect, as did *maternal coping* (4).
+*Mothers' life difficulties* (5) had a positive moderating effect,
+whereas *fathers' life difficulties* (6) had a difficult to interpret (sinusoid) moderating effect.
+*Father's current smoking* (7, no/yes) had a positive moderating effect,
+as did *mothers' problematic alcohol use* (8, no/yes).
+Whether the child *had a parent living elsewhere* (9) had a negative moderating effect.
+Finally, remoteness of the place of residence ("Highly accessible" to "Remote") had a flat
+moderating effect.
+This could indicate that it exerts its effect in interactions - but as the importance levels off after the first few moderators of fathers' anger (see Figure \@ref(fig:figvim)),
+it could also mean that the effect is negligible.
 
+There was less consistency in the moderators of parental anger, compared to warmth.
+Nevertheless, many of the same moderators recurred - most notably, *father involvement* and *mothers' and fathers' life difficulties*.
+Another noteworthy finding is that fathers' anger was moderated by two substance use-related moderators: *fathers' smoking*, and *mothers' problematic drinking*.
 
+### Inductive Reasoning
 
-
-
-Moderator one was enjoy_activity (The next questions ask about how you've been feeling over the last week. How much do you enjoy being physically active (doing things like sports, active games, walking or running, swimming)?, from "A lot" to "Not at all").
-The marginal relationship of enjoy_activity with the parenting effect of mothers' inductive reasoning was flat.
-
-
-Moderator two was coping_f (How well do you think you are coping?, from "Not at all" to "Extremely well").
-The marginal relationship of coping_f with the parenting effect of mothers' inductive reasoning was negative.
-
-
-Moderator three was difficult_life_m (How difficult do you feel your life is at present?, from "No problems or stress" to "Very many problems and stresses").
-The marginal relationship of difficult_life_m with the parenting effect of mothers' inductive reasoning was positive.
-
-
-Moderator four was indigenous (Is the family member of Aboriginal origin, Torres Strait Islander origin or both? Recoded to: either parent meets requirement, from "yes/no" to "yes/no").
-The marginal relationship of indigenous with the parenting effect of mothers' inductive reasoning was flat.
-
-
-Moderator five was move_distance (In study child's most recent move did he/she move…, from "Within this town or suburb?" to "From overseas?").
-The marginal relationship of move_distance with the parenting effect of mothers' inductive reasoning was concave.
-
-
-Moderator six was health_f (In general, would you say your own health is…?, from "Excellent" to "Poor").
-The marginal relationship of health_f with the parenting effect of mothers' inductive reasoning was positive.
-
-
-Moderator seven was family_climate_f (Sometimes family members may have difficulty getting along with one another. They do not always agree and they may get angry. In general, how would you rate your family’s ability to get along with one another?, from "Excellent" to "Poor").
-The marginal relationship of family_climate_f with the parenting effect of mothers' inductive reasoning was positive.
-
-
-Moderator eight was health (In general, how would you say study child’s current health is?, from "Excellent" to "Poor").
-The marginal relationship of health with the parenting effect of mothers' inductive reasoning was negative.
-
-
-Moderator nine was employed_f (P1 employed by Labour Force Survey definitionemployed by Labour Force Survey definition, from "Employed" to "Not in labour force"from "Employed" to "Not in labour force, Recoded to yes, no, no").
-The marginal relationship of employed_f with the parenting effect of mothers' inductive reasoning was positive.
-
-
-Moderator ten was coping_m (How well do you think you are coping?, from "Not at all" to "Extremely well").
-The marginal relationship of coping_m with the parenting effect of mothers' inductive reasoning was negative.
+The most important moderator of mothers' inductive reasoning was the child's *enjoyment of physical activity* (1), but its marginal effect was flat.
+*Fathers' coping* (2) had a negative moderating effect.
+*Mothers' life difficulties* (3), by contrast, had a positive moderating effect.
+The child's *indigenous* descent (4) had a flat moderating effect.
+The distance of the child's most recent move (5, from "Within this town or suburb" to "From interstate") had a concave moderating effect.
+The *father's health* (6, from "Excellent" to "Poor") had a positive moderating effect,
+as did *father-reported family climate* (7).
+The child's *health* (8) had a negative moderating effect.
+*Father's employment* (9) had a positive moderating effect.
+Finally, *mothers' coping* (10) had a negative moderating effect.
 
 
 Moderator one was involvement_f (In the past month how often did you...Eat an evening meal with this child, from "Once a day or more" to "Not at all").
@@ -462,85 +461,11 @@ Moderator ten was health_m (In general, would you say your own health is…?, fr
 The marginal relationship of health_m with the parenting effect of fathers' inductive reasoning was negative.
 
 
-Moderator one was employed_f (P1 employed by Labour Force Survey definitionemployed by Labour Force Survey definition, from "Employed" to "Not in labour force"from "Employed" to "Not in labour force, Recoded to yes, no, no").
-The marginal relationship of employed_f with the parenting effect of mothers' anger was positive.
+### Overall Observations
 
-
-Moderator two was say_1 (How often do you have a say in what the family does, such as what to watch on TV, what to do on the weekends, where to go on family outings or holidays?, from "Always" to "Never").
-The marginal relationship of say_1 with the parenting effect of mothers' anger was positive.
-
-
-Moderator three was enjoy_activity (The next questions ask about how you've been feeling over the last week. How much do you enjoy being physically active (doing things like sports, active games, walking or running, swimming)?, from "A lot" to "Not at all").
-The marginal relationship of enjoy_activity with the parenting effect of mothers' anger was negative.
-
-
-Moderator four was weight_concern (How concerned are you about child's weight at the moment?, from "Not at all" to "Very").
-The marginal relationship of weight_concern with the parenting effect of mothers' anger was negative.
-
-
-Moderator five was coping_f (How well do you think you are coping?, from "Not at all" to "Extremely well").
-The marginal relationship of coping_f with the parenting effect of mothers' anger was negative.
-
-
-Moderator six was Absenteeism (NA, NA).
-The marginal relationship of Absenteeism with the parenting effect of mothers' anger was negative.
-
-
-Moderator seven was difficult_life_m (How difficult do you feel your life is at present?, from "No problems or stress" to "Very many problems and stresses").
-The marginal relationship of difficult_life_m with the parenting effect of mothers' anger was negative.
-
-
-Moderator eight was difficult_life_f (How difficult do you feel your life is at present?, from "No problems or stress" to "Very many problems and stresses").
-The marginal relationship of difficult_life_f with the parenting effect of mothers' anger was unclear (other).
-
-
-Moderator nine was health (In general, how would you say study child’s current health is?, from "Excellent" to "Poor").
-The marginal relationship of health with the parenting effect of mothers' anger was unclear (other).
-
-
-Moderator ten was involvement_f (In the past month how often did you...Eat an evening meal with this child, from "Once a day or more" to "Not at all").
-The marginal relationship of involvement_f with the parenting effect of mothers' anger was positive.
-
-
-Moderator one was involvement_f (In the past month how often did you...Eat an evening meal with this child, from "Once a day or more" to "Not at all").
-The marginal relationship of involvement_f with the parenting effect of fathers' anger was positive.
-
-
-Moderator two was health (In general, how would you say study child’s current health is?, from "Excellent" to "Poor").
-The marginal relationship of health with the parenting effect of fathers' anger was positive.
-
-
-Moderator three was family_climate_c (How often do people in your family yell at each other?, from "Never" to "Always").
-The marginal relationship of family_climate_c with the parenting effect of fathers' anger was negative.
-
-
-Moderator four was coping_m (How well do you think you are coping?, from "Not at all" to "Extremely well").
-The marginal relationship of coping_m with the parenting effect of fathers' anger was negative.
-
-
-Moderator five was difficult_life_m (How difficult do you feel your life is at present?, from "No problems or stress" to "Very many problems and stresses").
-The marginal relationship of difficult_life_m with the parenting effect of fathers' anger was positive.
-
-
-Moderator six was difficult_life_f (How difficult do you feel your life is at present?, from "No problems or stress" to "Very many problems and stresses").
-The marginal relationship of difficult_life_f with the parenting effect of fathers' anger was unclear (other).
-
-
-Moderator seven was smoking_f (Do you currently smoke cigarettes?, No/Yes).
-The marginal relationship of smoking_f with the parenting effect of fathers' anger was positive.
-
-
-Moderator eight was alcohol_m (Problematic alcohol use, defined as having heavy daily alcohol consumption (>4 drinks for men >2 for women) or frequent binge drinking (7+ drinks in a sitting for men 5+ for women 2 to 3 times a month or more often), No/Yes).
-The marginal relationship of alcohol_m with the parenting effect of fathers' anger was positive.
-
-
-Moderator nine was has_ple (Does the study child have another parent living elsewhere?, from "No, both biological or adoptive parents live here" to "Yes, two elsewhere. Recoded to no, no, yes, yes").
-The marginal relationship of has_ple with the parenting effect of fathers' anger was negative.
-
-
-Moderator ten was remoteness (Remoteness Area Classification, from "Highly accessible" to "Not determined").
-The marginal relationship of remoteness with the parenting effect of fathers' anger was flat.
-
+Overall, father-related factors (17 times) were more prevalent among the top moderators than mother-related factors (13 times).
+Moreover, father-related factors were particularly prominent as moderators of mothers' parenting behaviors (10 times) compared to fathers' parenting behaviors (7 times).
+Conversely, mother-related factors were also overrepresented as moderators of fathers' parenting (8 times) compared to mothers' parenting (5 times).
 
 
 ## Discussion 
