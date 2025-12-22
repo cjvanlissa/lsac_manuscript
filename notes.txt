@@ -1,0 +1,1 @@
+* Fix missing label for ind reas in vim_mf_pageplot.svg

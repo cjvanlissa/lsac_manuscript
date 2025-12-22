@@ -324,7 +324,7 @@ Thus, maternal warmth's effect was positive in about half of families, and negat
 <!-- In the written description, we refer to specific variables by parent and number, e.g. the number one moderator of maternal warmth, father involvement, is M1.  -->
 <!-- Point shape indicates the approximate shape of the relationship of each moderator with the parenting effect. -->
 
-```{r figvim, fig.cap="Importance of the top 10 moderators for each parenting behavior. Labels indicate approximate shape of the moderator's relationship with the parenting effect, no: none, p: positive, n: negative, cn: concave, cv: convex, o: other. Axis label omitted because the scale (-2LL) has no intrinsic meaning, range: [0, 34]."}
+```{r figvim, fig.cap="Importance of the top 10 moderators for each parenting behavior. Labels indicate approximate shape of the moderator's relationship with the parenting effect, no: none, p: positive, n: negative, cn: concave, cv: convex, o: other. Axis label omitted because the scale (-2LL) is not readily interpretable, range: [0, 34]."}
 knitr::include_graphics(file.path(results_folder, "vim_mf_pageplot.svg"))
 ```
 
@@ -420,46 +420,16 @@ The child's *health* (8) had a negative moderating effect.
 *Father's employment* (9) had a positive moderating effect.
 Finally, *mothers' coping* (10) had a negative moderating effect.
 
-
-Moderator one was involvement_f (In the past month how often did you...Eat an evening meal with this child, from "Once a day or more" to "Not at all").
-The marginal relationship of involvement_f with the parenting effect of fathers' inductive reasoning was convex.
-
-
-Moderator two was monitoring_difficult_m (How strongly do you agree or disagree with the following statement? "It is difficult to know where child is and what he/she is doing now that he/she is getting older.", from "Strongly disagree" to "Strongly agree").
-The marginal relationship of monitoring_difficult_m with the parenting effect of fathers' inductive reasoning was convex.
-
-
-Moderator three was enjoy_activity (The next questions ask about how you've been feeling over the last week. How much do you enjoy being physically active (doing things like sports, active games, walking or running, swimming)?, from "A lot" to "Not at all").
-The marginal relationship of enjoy_activity with the parenting effect of fathers' inductive reasoning was convex.
-
-
-Moderator four was health (In general, how would you say study child’s current health is?, from "Excellent" to "Poor").
-The marginal relationship of health with the parenting effect of fathers' inductive reasoning was negative.
-
-
-Moderator five was difficult_life_f (How difficult do you feel your life is at present?, from "No problems or stress" to "Very many problems and stresses").
-The marginal relationship of difficult_life_f with the parenting effect of fathers' inductive reasoning was negative.
-
-
-Moderator six was say_1 (How often do you have a say in what the family does, such as what to watch on TV, what to do on the weekends, where to go on family outings or holidays?, from "Always" to "Never").
-The marginal relationship of say_1 with the parenting effect of fathers' inductive reasoning was positive.
-
-
-Moderator seven was activities_extracurricular (In the last 12 months has child regularly participated in any of the following activities?('Regularly' means at least once a week, for three months or more e.g. a sports season)(Exclude activities done as part of the child's normal outside school hours care) Community group or club (e.g. scouts, guides or cultural group), No/Yes).
-The marginal relationship of activities_extracurricular with the parenting effect of fathers' inductive reasoning was concave.
-
-
-Moderator eight was sick_m (Does the family member have a medical condition or disability that has lasted for 6 months or more?, No/Yes).
-The marginal relationship of sick_m with the parenting effect of fathers' inductive reasoning was negative.
-
-
-Moderator nine was school_concerns (In the last 12 months has the school contacted you (or partner) because study child has behaved poorly at school?, No/Yes).
-The marginal relationship of school_concerns with the parenting effect of fathers' inductive reasoning was positive.
-
-
-Moderator ten was health_m (In general, would you say your own health is…?, from "Excellent" to "Poor").
-The marginal relationship of health_m with the parenting effect of fathers' inductive reasoning was negative.
-
+For fathers' inductive reasoning, the top three moderators had convex effects.
+By far the most important moderator (1) was *father involvement*,
+followed by whether the *mother's difficulty monitoring the child* (2, "It is difficult to know where child is and what he/she is doing now that he/she is getting older", from "Strongly disagree" to "Strongly agree"),
+and the child's *enjoyment of activity* (3).
+The child's *health* (4) had a negative moderating effect,
+as did *fathers' life difficulties* (5).
+The child's *say in family decisions* (6) had a positive moderating effect.
+Participation in *extracurricular activities* (7, from 7-12 activities a week) had an approximately concave moderating effect, where the effect of fathers' inductive reasoning was slightly positively attenuated from 7-8, and then negatively attenuated for more activities per week.
+Mothers' long-term *sickness* or disability (8, no/yes) and *health* (10, from "Excellent" to "Poor") both had negative moderating effects.
+*School concerns* (9) had a positive moderating effect.
 
 ### Overall Observations
 
