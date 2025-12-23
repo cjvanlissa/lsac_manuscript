@@ -184,20 +184,21 @@ The data and study documentation are available under controlled access via <http
 ## Participants and procedure
 
 Participants were `r desc$n[which(desc$name == "Age")]` children and their `r desc$n[which(desc$name == "age_m")]` mothers and `r desc$n[which(desc$name == "age_f")]` fathers enrolled in the Longitudinal Study of Australian Children [LSAC, @australianinstituteoffamilystudiesGrowingAustralia2020].
-<!-- repeated measures of parenting practices and child internalizing symptoms, separately reported for mothers and fathers. The analytic dataset excluded any identifier variables and recoded categorical variables for analysis consistency (e.g., recoding upper categories in extracurricular activities and child support to preserve ordinal structure). -->
+<!-- repeated measures of parenting practices and child internalizing problems, separately reported for mothers and fathers. The analytic dataset excluded any identifier variables and recoded categorical variables for analysis consistency (e.g., recoding upper categories in extracurricular activities and child support to preserve ordinal structure). -->
 
 ## Measures
 
-The primary predictors (hereafter: predictors) were parenting practices reported by both mothers and fathers on five-point Likert scales (from "Never" to "Always"), namely warmth (*"Express affection by hugging, kissing and holding this child"*), anger (*"Of all the times you talk to this child about his/her behaviour, how often is this disapproval"*), and inductive reasoning [*"Explain to this child why he/she was being corrected"*, see @zubrickParentingMeasuresLongitudinal2014].^[Consistency and monitoring were also considered, but omitted due to unacceptable psychometric properties.]
+The primary predictors (hereafter: predictors) were parenting practices reported by both mothers and fathers on five-point Likert scales (from "Never" to "Always"), namely warmth (6 items, e.g., *"Express affection by hugging, kissing and holding this child"*), anger (6 items, e.g. *"Of all the times you talk to this child about his/her behaviour, how often is this disapproval"*), and inductive reasoning [5 items, e.g. *"Explain to this child why he/she was being corrected"*, see @zubrickParentingMeasuresLongitudinal2014].^[Consistency and monitoring were also considered, but omitted due to unacceptable psychometric properties.]
+Anger was reverse-coded, such that higher levels on this variable indicate lower anger.
 
-The primary outcome variable (hereafter: outcome, or internalizing symptoms) the child-reported Emotional Problems sub-scale of the Strengths and Difficulties Questionnaire [SDQ, @goodmanPsychometricPropertiesStrengths2001], assessed on a three-point Likert scale (from "Not true" to "Certainly true"; e.g. "*I am often unhappy, depressed or tearful*").
+The primary outcome variable (hereafter: outcome, or internalizing problems) the child-reported Emotional Problems sub-scale of the Strengths and Difficulties Questionnaire [SDQ, @goodmanPsychometricPropertiesStrengths2001], assessed on a three-point Likert scale (from "Not true" to "Certainly true") with five items, e.g. "*I am often unhappy, depressed or tearful*".
 
 Predictors and outcomes were assessed biannually for four waves (except warmth, which was assessed for three waves).
 Confirmatory factor analyses (CFA) indicated that metric invariance could be assumed across waves and (for predictors) across parents, see Table \@ref(tab:tabinvar).
 We considered RMSEA < .06, CFI > .95 and TLI > .95 to indicate good model fit [@huCutoffCriteriaFit1999].
 Composite reliability for each scale was good for all scales across respondents and timepoints [@greenReliabilitySummedItem2009],
 except for anger, whose reliability in wave four was below $\alpha = .59$ for both mothers and fathers.
-Since our focus is on the longitudinal effects of parenting practices in waves one to three on internalizing symptoms in waves two to four, we do not consider this to be problematic.
+Since our focus is on the longitudinal effects of parenting practices in waves one to three on internalizing problems in waves two to four, we do not consider this to be problematic.
 
 ```{r tabinvar}
 usethis::with_project(results_folder, {
@@ -228,7 +229,7 @@ desc$unique <- desc$unique-1L
 desc_cat <- desc
 desc_cat$mode_prop <- desc_cat$mode/max_n
 desc_cat$mode <- desc_cat$mode_value
-print(names(desc_cat))
+
 desc_cat <- desc_cat[!desc$type == "numeric", c("name", "n", "unique", "mode", "mode_prop", "v", "Resp", "Question", "Values")
 ]
 
@@ -242,7 +243,7 @@ desc_scl <- desc_scl[, c("name", "mean", "sd", "min", "max", "skew",
 "kurt", "Resp", "items", "cfi", "tli", "rmsea", "rel_lv")]
 ```
 
-We included `r nrow(desc)` moderators (hereafter: moderators), ranging from demographic variables to environmental factors.
+We included `r nrow(desc)-2L` moderators (hereafter: moderators), ranging from demographic variables to environmental factors.
 Table \@ref(tab:tabcat) shows descriptive statistics for categorical variables, \@ref(tab:tabnum) for continuous variables,
 and \@ref(tab:tabscal) for multi-item scales.
 See [Supplementary Table S1](https://github.com/cjvanlissa/lsac_emotional_development/blob/a38bb8061a61e944f3f6c8e8532c9087084888ba/descriptives_scales.csv) for full information, including the questions and response options.
@@ -261,13 +262,13 @@ knitr::kable(desc_scl, caption = "Scale descriptive statistics. Resp: Respondent
 
 ## Strategy of analyses
 
-We set out to identify the most important moderators of the effects of parenting practices on children's internalizing symptoms (or: moderators of parenting effects).
+We set out to identify the most important moderators of the effects of parenting practices on children's internalizing problems (or: moderators of parenting effects).
 Missing data were imputed using 2-nearest neighbors [@kowarikImputationPackageVIM2016].
 We used Random Intercept Cross-Lagged Panel Models to estimate the parenting effects [RI-CLPM, @hamakerCritiqueCrosslaggedPanel2015].
-RI-CLPMs are longitudinal models that partition the repeated measurements of predictor- and outcome variables into two components: stable between-family differences in parenting and internalizing symptoms (random intercepts) and within-family deviations from this stable state.
+RI-CLPMs are longitudinal models that partition the repeated measurements of predictor- and outcome variables into two components: stable between-family differences in parenting and internalizing problems (random intercepts) and within-family deviations from this stable state.
 We estimated separate RI-CLPMs for each parenting practice and parent.
 All other parenting practices were included in the moderator set, to allow for interactions between parenting practices.
-In an RI-CLPM, parenting effects can be interpreted as follows: If parents exibit higher levels of this parenting behavior than usual in one wave, does this predict a change in their children's internalizing symptoms in the next wave?
+In an RI-CLPM, parenting effects can be interpreted as follows: If parents exibit higher levels of this parenting behavior than usual in one wave, does this predict a change in their children's internalizing problems in the next wave?
 
 We used the machine learning method SEM-forests to identify potential moderators of parenting effects [@brandmaierTheoryguidedExplorationStructural2016].
 A SEM-forest is comprised of several (in our case, 30) SEM-trees.
@@ -301,28 +302,27 @@ and drawing a random sample (in our case, n = 1000) of participants to determine
 Then, the expected value of the parenting effect is calculated for those combinations of values, and plotted.
 Since our analysis yields 774 such plots, they are not reprinted here, but they are available in the [online repository](https://cjvanlissa.github.io/lsac_emotional_development/#shape-of-association).
 
-The third outcome of interest is a single tree for each parenting practice.
-This single tree tells a data story of the kinds of between-family differences that make a difference for the effect of parenting practices on emotional development - but importantly, this should be seen as just one possible way in which between-family differences in parenting effects might arise, not as the only possible way.
-
-We focused on the interpretation of the top 10 most important moderators for each model.
-While this cutoff is arbitrary, it is defensible to focus more on top predictors because variable importance declines exponentially; thus, moderators not included in the top 10 are much less important than those included in the top 10.
-The single trees were also grown on the top 10 most important moderators.
+<!-- The third outcome of interest is a single tree for each parenting practice. -->
+<!-- This single tree tells a data story of the kinds of between-family differences that make a difference for the effect of parenting practices on emotional development - but importantly, this should be seen as just one possible way in which between-family differences in parenting effects might arise, not as the only possible way. -->
 
 ## Results
 
-Figure \@ref(fig:figvim) below show the permutation importance for each parenting behavior, for mothers and fathers separately.
-The approximate shape of the marginal association is summarized by the shape of each point in these plots.
-Importance metrics often show approximately exponential decay.
-This pattern is especially pronounced for fathers' anger,
+Figure \@ref(fig:figvim) below show the importance of the top 10 moderators, by parenting behavior, for mothers and fathers separately.
+These importance metrics show approximately exponential decay,
 where the most important moderator is much more important than those that follow.
-For mothers' inductive reasoning, by contrast, shows a nearly-flat profile,
-which indicates that no moderators are much more important than others.
+This pattern is especially pronounced for fathers' anger.
+Mothers' inductive reasoning, by contrast, shows a nearly-flat profile,
+which indicates that none of its moderators are much more important than others.
+While the choice to focus on 10 moderators is arbitrary, it is defensible due to this exponential decay.
+The approximate shape of the marginal association of each moderator with the parenting effect it moderates is summarized by the text labels in these plots.
+
 The effect of moderators on parenting effects should be interpreted in the context of the distribution of family-specific parenting effects.
-As Figure \@ref(fig:figboxplots) shows, on average, all parenting practices had negative effects,
-although maternal warmth was near-zero on average.
-Thus, maternal warmth's effect was positive in about half of families, and negative in the other half.
-<!-- In the written description, we refer to specific variables by parent and number, e.g. the number one moderator of maternal warmth, father involvement, is M1.  -->
-<!-- Point shape indicates the approximate shape of the relationship of each moderator with the parenting effect. -->
+As Figure \@ref(fig:figboxplots) shows, on average, all parenting practices had negative effects.
+Since anger was reverse-coded, this means that, across the board, more autonomy-supportive parenting practices were associated with lower internalzing problems.
+Thus, in most cases, a negative moderating effect means that higher levels of autonomy-supportive parenting are associated with a greater decrease, and a positive moderating effect means that more autonomy-supportive parenting becomes associated with a lesser decrease in internalizing problems.
+Some exeptions occur for maternal warmth, whose effect was near-zero on average,
+with a positive effect in about half of families, and negative in the other half.
+Here we see some cross-over interactions, where greater warmth becomes associated with an increase in internalizing problems.
 
 ```{r figvim, fig.cap="Importance of the top 10 moderators for each parenting behavior. Labels indicate approximate shape of the moderator's relationship with the parenting effect, no: none, p: positive, n: negative, cn: concave, cv: convex, o: other. Axis label omitted because the scale (-2LL) is not readily interpretable, range: [0, 34]."}
 knitr::include_graphics(file.path(results_folder, "vim_mf_pageplot.svg"))
@@ -337,30 +337,31 @@ knitr::include_graphics(file.path(results_folder, "parenting_effects_boxplots.sv
 For maternal warmth, the most important moderator (1) was *father involvement* (In the past month how often did you eat an evening meal with this child, from "Once a day or more" to "Not at all").
 Its marginal relationship with the effect of mothers' warmth was flat.
 Other important moderators were mother's (2) and fathers' (3) *life difficulties* (How difficult do you feel your life is at present?, from "No problems or stress" to "Very many problems and stresses").
-These moderators positively attenuated the (negative) effect of mothers' warmth.
-Whether or not the child had a *say* (4) in what the family does (negatively phrased: from "Always" to "Never") had a positive moderating effect.
+These moderators had a positive effect; thus, they diminished the protective effect of mothers' warmth on internalizing problems.
+Whether or not the child had no *say* (4) in what the family does (negatively phrased: from "Always" to "Never") also diminished the effect of mothers' warmth.
 How often someone in the household *helped the child with homework* (5) (from "5 or more days a week" to "Never")
-had a concave effect, where both extremes showed a more negative effect of maternal warmth.
-The child's *biological relationship* (6) to the parents ("no/yes") had a negative moderating effect.
-Mothers' *coping* (from "A little" to "Extremely well") had a negative moderating effect, where "A little" was associated with positive, and higher values were associated with negative effects of warmth.
-*Concerns at school* in the last 12 months (8) (No/Yes) had a negative moderating effect.
-Child-perceived *family climate* (9; How often do people in your family yell at each other?, from "Never" to "Always") had a positive moderating effect.
-Finally, how much the child *enjoyed physical activity* (10, from "A lot" to "Not at all") had a positive effect.
+had a concave effect, where both extremes showed a more protective effect of maternal warmth.
+The child's *biological relationship* (6) to the parents ("no/yes") had a negative moderating effect, so warmth reduced internalizing problems more when coming from biological parents.
+Mothers' *coping* (How well do you think you are coping, from "A little" to "Extremely well") showed a cross-over interaction:
+Warmth increased internalizing problems when mothers struggled to cope ("A little"), and protected against them when mothers coped well.
+*Concerns at school* in the last 12 months (8) (no/yes) had a negative moderating effect - thus, warmth had a greater protective effect against internalizing problems for children who had displayed concerns at school.
+Child-perceived *family climate* (9; How often do people in your family yell at each other?, from "Never" to "Always") diminished the effect of warmth.
+Finally, the child's lack of enjoyment of *physical activity* (10, from "A lot" to "Not at all") diminished the effect of warmth.
 
 *Father involvement* was also paternal warmth's most important moderator (1), again with a flat effect.
-The child's long-term medical condition or disability (2, *sick*, No/Yes) positively moderated the effect of fathers' warmth.
-Fathers' (3) and mothers' (5) *life difficulties* (3) had a negative moderating effect.
+The child's long-term medical condition or disability (2, *sick*, no/yes) diminished the effect of fathers' warmth.
+Fathers' (3) and mothers' (5) *life difficulties* had negative moderating effects.
 Mothers' coping (4) had an approximately flat moderating effect.
-*Concerns at school* (6) positively moderated the effect of fathers' warmth.
-Whether the child was of *indigenous* (7) descent ("yes/no") positively moderated the effect of fathers' warmth.
+*Concerns at school* (6) positively moderated the effect of fathers' warmth - the opposite effect as for mothers' warmth.
+Whether the child was of *indigenous* (7) descent (no/yes) positively moderated the effect of fathers' warmth.
 *Family climate* (8) had a concave moderating effect, where the parenting effect of fathers' warmth was more negative at either ends of the scale.
 Whether the study child had a *parent living elsewhere* (9, no/yes) had a positive moderating effect.
 Finally, how much the child *enjoyed physical activity* (10, from "A lot" to "Not at all") had a negative moderating effect.
 
 Many of the most important moderators for warmth were the same across mothers and fathers.
-For both, the most important moderator was (lack of) *father involvement*,
+For both, the most important moderator was *father involvement*,
 which stood out above all other moderators for paternal warmth.
-Despite being the most important moderator, its marginal effect was flat.
+Despite being the most important moderator, its marginal effects were flat.
 A likely explanation is that it interacts with other moderators.
 Parent characteristics, like mothers' and fathers' *difficult life* and the related moderator, *mothers' coping*,
 also ranked high for both.
@@ -369,18 +370,16 @@ Finally, two adolescent characteristics ranked high for both:
 children's *enjoyment of activity*, which might be an indicator of children's good health (notice *sick*, for father's warmth),
 and *school concerns*.
 
-Most of the abovementioned important moderators are micro-system characteristics.
+Most of the aforementioned important moderators are micro-system characteristics.
 This pattern persists when examining unique top moderators of maternal and paternal warmth.
 For maternal warmth, this included whether the child had a *say* in family decisions, whether they received *help with homework*, and whether they were *biologically related to the parents*.
 For paternal warmth, this included
-whether the child was of *indigenous* descent
-and whether they *had a parent living elsewhere*.
-The latter strongly correlates with *biological relationship* (see mother effects), $r = .80$, so both might be indicators of an intact biological family.
+whether the child was of *indigenous* descent, which correlates $r = .80$ with *biological relationship* (see mother effects), so both might be indicators of an intact biological family.
 
 #### Anger
 
-For mothers' anger, the most important moderator was *father's employment* (1; no/yes),
-which had a positive moderating effect.
+For mothers' anger, the most important moderator was *father's employment* (1; no/yes);
+if fathers were employed, their low anger had less of a protective effect on internalizing problems.
 The moderating effect of child's *say* (2) in family affairs also had a positive moderating effect.
 The child's *enjoyment of physical activity* (3), *Concern about the child's weight* (4, from "Not at all" to "Very"), father's *coping* (5),
 *absenteeism* (6, no/yes),
@@ -403,9 +402,9 @@ moderating effect.
 This could indicate that it exerts its effect in interactions - but as the importance levels off after the first few moderators of fathers' anger (see Figure \@ref(fig:figvim)),
 it could also mean that the effect is negligible.
 
-There was less consistency in the moderators of parental anger, compared to warmth.
+There was less consistency between parents in the moderators of parental anger, compared to warmth.
 Nevertheless, many of the same moderators recurred - most notably, *father involvement* and *mothers' and fathers' life difficulties*.
-Another noteworthy finding is that fathers' anger was moderated by two substance use-related moderators: *fathers' smoking*, and *mothers' problematic drinking*.
+A noteworthy finding is that fathers' anger was moderated by two substance use-related moderators: *fathers' smoking*, and *mothers' problematic drinking*.
 
 ### Inductive Reasoning
 
@@ -433,10 +432,16 @@ Mothers' long-term *sickness* or disability (8, no/yes) and *health* (10, from "
 
 ### Overall Observations
 
-Overall, father-related factors (17 times) were more prevalent among the top moderators than mother-related factors (13 times).
+Overall, some of the most consistent moderators of all parenting behaviors were father involvement, and mothers' and fathers' life difficulties.
+Of the child-reported moderators, (lack of) enjoyment of physical activity was most consistent.
+Father-related factors (17 times) were more prevalent among the top moderators than mother-related factors (13 times).
 Moreover, father-related factors were particularly prominent as moderators of mothers' parenting behaviors (10 times) compared to fathers' parenting behaviors (7 times).
-Conversely, mother-related factors were also overrepresented as moderators of fathers' parenting (8 times) compared to mothers' parenting (5 times).
+Conversely, mother-related factors were also prevalent as moderators of fathers' parenting (8 times) compared to mothers' parenting (5 times).
 
+
+<!-- # Single Tree -->
+
+<!-- The single trees were also grown on the top 10 most important moderators. -->
 
 ## Discussion 
 
